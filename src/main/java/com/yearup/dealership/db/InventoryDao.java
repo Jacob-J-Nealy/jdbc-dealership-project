@@ -14,6 +14,27 @@ public class InventoryDao {
 
     public void addVehicleToInventory(String vin, int dealershipId) {
         // TODO: Implement the logic to add a vehicle to the inventory
+
+        // SQL String
+        String query = """
+                INSERT INTO inventory (vin, dealership_id)
+                VALUES (?,?)
+                """;
+
+        // Try-Catch Connection
+        try (Connection connection = dataSource.getConnection();
+
+             // Connecting SQL String to Prepared Statement
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Settings Values to
+            preparedStatement.setString(1, vin);
+            preparedStatement.setInt(2, dealershipId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("error");
+        }
     }
 
     public void removeVehicleFromInventory(String vin) {
