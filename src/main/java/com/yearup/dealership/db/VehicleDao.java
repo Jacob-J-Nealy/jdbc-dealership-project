@@ -18,7 +18,7 @@ public class VehicleDao {
     public void addVehicle(Vehicle vehicle) {
 
         String query = """
-                INSERT INTO vehicles (VIN, Make, Model, Year, Sold, color, vehicleType, odometer, price
+                INSERT INTO vehicles (VIN, Make, Model, Year, Sold, color, vehicleType, odometer, price)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         // Try-Catch Connection
@@ -223,14 +223,14 @@ public class VehicleDao {
 
     public List<Vehicle> searchByType(String type) {
         List<Vehicle> vehicles = new ArrayList<>();
-        String sql = """
+        String query = """
         SELECT * 
         FROM vehicles 
         WHERE vehicleType = ?
         """;
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, type);
 
