@@ -27,11 +27,17 @@ public class VehicleDao {
              // Connecting SQL String to Prepared Statement
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            // Settings Values to
-            preparedStatement.setString(1, vehicle.getVin());
-            preparedStatement.setString(2, vehicle.getMake());
-            preparedStatement.setString(3, vehicle.getModel());
-            preparedStatement.setInt(4,    vehicle.getYear());
+            // Settings Values to  New Vehicle Attributes
+            preparedStatement.setString( 1, vehicle.getVin());
+            preparedStatement.setString( 2, vehicle.getMake());
+            preparedStatement.setString( 3, vehicle.getModel());
+            preparedStatement.setInt(    4, vehicle.getYear());
+            preparedStatement.setBoolean(5, vehicle.isSold());
+            preparedStatement.setString( 6, vehicle.getColor());
+            preparedStatement.setString( 7, vehicle.getVehicleType());
+            preparedStatement.setInt(    8, vehicle.getOdometer());
+            preparedStatement.setDouble( 9,vehicle.getPrice());
+
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -40,7 +46,8 @@ public class VehicleDao {
     }
 
     public void removeVehicle(String VIN) {
-        // TODO: Implement the logic to remove a vehicle
+
+        String sql
     }
 
     public List<Vehicle> searchByPriceRange(double minPrice, double maxPrice) {
