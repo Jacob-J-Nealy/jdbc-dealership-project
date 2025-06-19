@@ -37,7 +37,6 @@ public class InventoryDao {
     }
 
     public void removeVehicleFromInventory(String vin) {
-        // TODO: Implement the logic to remove a vehicle from the inventory
 
         // SQL String
         String query = """

@@ -4,6 +4,7 @@ import com.yearup.dealership.models.Vehicle;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,27 @@ public class VehicleDao {
     }
 
     public void addVehicle(Vehicle vehicle) {
-        // TODO: Implement the logic to add a vehicle
+
+        String query = """
+                INSERT INTO vehicles (VIN, Make, Model, Year, Sold, color, vehicleType, odometer, price
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+        // Try-Catch Connection
+        try (Connection connection = dataSource.getConnection();
+
+             // Connecting SQL String to Prepared Statement
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Settings Values to
+            preparedStatement.setString(1, vehicle.getVin());
+            preparedStatement.setString(2, vehicle.getMake());
+            preparedStatement.setString(3, vehicle.getModel());
+            preparedStatement.setInt(4,    vehicle.getYear());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("error");
+        }
     }
 
     public void removeVehicle(String VIN) {
