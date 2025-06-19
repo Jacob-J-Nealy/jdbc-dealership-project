@@ -95,8 +95,6 @@ public class VehicleDao {
 
             }
 
-            preparedStatement.executeUpdate();
-
         } catch (Exception e) {
             System.err.println("Error");
         }
@@ -105,8 +103,37 @@ public class VehicleDao {
     }
 
     public List<Vehicle> searchByMakeModel(String make, String model) {
-        // TODO: Implement the logic to search vehicles by make and model
-        return new ArrayList<>();
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        String query = """
+                SELECT *
+                FROM vehicles
+                WHERE make = ? AND model = ?
+                """;
+
+        // Try-Catch Connection
+        try (Connection connection = dataSource.getConnection();
+
+             // Connecting SQL String to Prepared Statement
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Settings Values to  New Vehicle Attributes
+            preparedStatement.setString(1, make);
+            preparedStatement.setString(2, model);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Vehicle vehicle = createVehicleFromResultSet(resultSet);
+                    vehicles.add(vehicle);
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error");
+        }
+
+        return vehicles;
     }
 
     public List<Vehicle> searchByYearRange(int minYear, int maxYear) {
