@@ -167,13 +167,58 @@ public class VehicleDao {
     }
 
     public List<Vehicle> searchByColor(String color) {
-        // TODO: Implement the logic to search vehicles by color
-        return new ArrayList<>();
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        String query = """
+                SELECT *
+                FROM  vehicles
+                WHERE color = ?
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, color);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    vehicles.add(createVehicleFromResultSet(resultSet));
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println();
+        }
+
+        return vehicles;
     }
 
     public List<Vehicle> searchByMileageRange(int minMileage, int maxMileage) {
-        // TODO: Implement the logic to search vehicles by mileage range
-        return new ArrayList<>();
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        String query = """
+                SELECT *
+                FROM  vehicles
+                WHERE odometer
+                BETWEEN ? AND ?
+                """;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, minMileage);
+            preparedStatement.setInt(2, maxMileage);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    vehicles.add(createVehicleFromResultSet(resultSet));
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error");
+        }
+        return vehicles;
     }
 
     public List<Vehicle> searchByType(String type) {
