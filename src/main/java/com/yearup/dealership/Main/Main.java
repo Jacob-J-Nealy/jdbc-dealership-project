@@ -21,9 +21,11 @@ public class Main {
         String username = args[0];
         String password = args[1];
 
+        // Created New Data Source
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/car_dealership");
 
+        // Login to DataBase (URL, username, password)
+        dataSource.setUrl("jdbc:mysql://localhost:3306/car_dealership");
         dataSource.setUsername(username);
         dataSource.setPassword(password);
 
