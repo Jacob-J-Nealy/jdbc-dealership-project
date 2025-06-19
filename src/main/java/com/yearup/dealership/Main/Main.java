@@ -25,7 +25,7 @@ public class Main {
         BasicDataSource dataSource = new BasicDataSource();
 
         // Login to DataBase (URL, username, password)
-        dataSource.setUrl("jdbc:mysql://localhost:3306/car_dealership");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/cardealerships");
         dataSource.setUsername(username);
         dataSource.setPassword(password);
 

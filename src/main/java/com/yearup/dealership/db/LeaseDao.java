@@ -25,7 +25,10 @@ public class LeaseDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString();
+            preparedStatement.setString(1, leaseContract.getVin());
+            preparedStatement.setDate(2, java.sql.Date.valueOf(leaseContract.getLeaseStart()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(leaseContract.getLeaseEnd()));
+            preparedStatement.setDouble(4, leaseContract.getMonthlyPayment());
 
         } catch (Exception e) {
             System.err.println("Error");
