@@ -58,13 +58,14 @@ public class VehicleDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             // Settings Values to  New Vehicle Attributes
-            preparedStatement.setString( 1, VIN);
+            preparedStatement.setString(1, VIN);
 
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
             System.err.println("Error");
         }
+    }
 
     public List<Vehicle> searchByPriceRange(double minPrice, double maxPrice) {
         // TODO: Implement the logic to search vehicles by price range
